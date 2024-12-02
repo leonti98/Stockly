@@ -1,3 +1,4 @@
+# This script reads a csv file with stock tickers and adds them to the database
 import csv
 from cs50 import SQL
 

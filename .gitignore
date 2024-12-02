@@ -2,4 +2,4 @@
 __pycache__/
 flask_session/
 .vscode/
-finance.db
+finance-old.db

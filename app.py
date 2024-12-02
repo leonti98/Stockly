@@ -23,7 +23,7 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///finance.db")
 
-
+# Ensure responses aren't cached
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -31,7 +31,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
 
 @app.route("/")
 @login_required
@@ -48,7 +47,7 @@ def index():
         id = ?""",
         user_id,
     )
-    # Get necessarry data from database
+    # Get User's stocks information from database
     user_info[0]["grand_total"] = user_info[0]["cash"]
     user_stocks = db.execute(
         """
@@ -69,11 +68,12 @@ def index():
             stock_symbol, transaction_type ASC""",
         user_id,
     )
+    # If user has no stocks, return empty list
     if not user_stocks:
         return render_template(
             "/index.html", stocks=[], user_info=user_info, totals=[], grand_total=0
         )
-
+    # Calculate current price of stocks and total value of stocks
     for i in range(len(user_stocks)):
         current_info = lookup(user_stocks[i]["stock_symbol"])
         if current_info:
@@ -91,7 +91,7 @@ def index():
             user_stocks[i - 1]["total_current_value"] -= user_stocks[i][
                 "total_current_value"
             ]
-
+            
     stocks = []
     quantities = []
     averages = []
@@ -124,6 +124,7 @@ def index():
 
 @app.route("/search")
 @login_required
+# Search for stock symbol in database
 def search():
     q = request.args.get("q")
     if q:
@@ -193,37 +194,6 @@ def userStocks():
     stock_info = {"quantity": quantity, "current_price": current_price}
 
     return jsonify(stock_info)
-
-
-@app.route("/availability")
-def availability():
-    user_id = session["user_id"]
-    stock = request.args.get("stock")
-    if stock:
-        transactions = db.execute(
-            """
-        SELECT
-            stock_symbol, SUM(quantity) AS quantity, transaction_type
-        FROM
-            users_stocks
-            INNER JOIN stocks ON users_stocks.stock_id = stocks.stock_id
-        WHERE
-            user_id = ? AND stock_symbol = ?
-        GROUP BY
-            stock_symbol, transaction_type
-        ORDER BY
-            stock_symbol, transaction_type ASC""",
-            user_id,
-            stock,
-        )
-        buy_transactions = transactions[0]["quantity"]
-        stock_availability = buy_transactions
-        if len(transactions) == 2:
-            sell_transactions = transactions[1]["quantity"]
-            stock_availability -= sell_transactions
-    else:
-        return []
-    return jsonify(stock_availability)
 
 
 @app.route("/buy", methods=["GET", "POST"])

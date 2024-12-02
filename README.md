@@ -1,6 +1,6 @@
 # Stockly
 
-Stockly is a web application that allows users to manage their stock portfolios. Users can buy and sell stocks, view their portfolio, and track their transaction history.
+Stockly is a web application that allows users to manage their stock portfolios. Users can buy and sell stocks, view their portfolio, and track their transaction history. Stock prices might not be correct, since this application uses test api provided by cs50 course.
 
 ## Features
 
@@ -33,7 +33,7 @@ Stockly is a web application that allows users to manage their stock portfolios.
 - Flask
 - SQLite
 - Bootstrap
-- Yahoo Finance API
+- Yahoo Finance CS50 API
 
 ## Screenshots
 ### Home Page
