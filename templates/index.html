@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block head %}
+  <link rel="stylesheet" href="../static/index.css" />
+{% endblock head %}
+{% block main %}
+  <div class="container">
+    <h1>Hello, {{ user_info[0]['username'] }}</h1>
+    <div>
+      <a href="/addcash" class="btn btn-primary btn-sm">Add Cash</a>
+      <a href="/changePassword" class="btn btn-primary btn-sm">Change Password</a>
+    </div>
+  </div>
+  <div class="container" id="userBar">
+    <div class="row align-items-center">
+      <div class="col align-self-center">
+        <p>Cash Blance: {{ user_info[0]['cash'] | usd }}</p>
+      </div>
+      {% if totals %}
+        <div class="col align-self-center">
+          <p>Portfolio Value: {{ totals['total_value'] | usd }}</p>
+        </div>
+        <div class="col align-self-center">
+          <p>Grand Total: {{ grand_total | usd }}</p>
+        </div>
+      {% else %}
+        <div class="col align-self-center">
+          <p>Portfolio Value: 0</p>
+        </div>
+        <div class="col align-self-center">
+          <p>Grand Total: {{ user_info[0]['cash'] | usd }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if stocks %}
+    <div class="container">
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Symbol</th>
+              <th scope="col">Average Paid</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total Paid</th>
+              <th scope="col">Current Price</th>
+              <th scope="col">Value today</th>
+              <th scope="col">Sell</th>
+            </tr>
+          </thead>
+          <br />
+          <tbody>
+            {% for stock in stocks %}
+              {% if stock['quantity'] != 0 %}
+                <tr class="table-info">
+                  <td>{{ stock['stock_symbol'] }}</td>
+                  <td>{{ stock['avg_price'] | usd }}</td>
+                  <td>{{ stock['quantity'] }}</td>
+                  <td>{{ stock['total_transaction_amount'] | usd }}</td>
+                  <td>{{ stock['current_price'] | usd }}</td>
+                  <td>{{ stock["total_current_value"] | usd }}</td>
+                  <td>
+                    <form action="/sell" method="post">
+                      <input type="hidden" name="symbol" value="{{ stock['stock_symbol'] }}" />
+                      <input type="hidden" name="shares" value="{{ stock['quantity'] }}" />
+                      <button type="submit" class="btn btn-primary btn-sm">Sell {{ stock['quantity'] }}</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+            {% if totals %}
+              <tr class="table-dark">
+                <td>TOTAL</td>
+                <td>{{ totals['weighted_avg'] | usd }}</td>
+                <td>{{ totals['quantity'] }}</td>
+                <td>{{ totals['total_paid'] | usd }}</td>
+                <td></td>
+                <td>{{ totals['total_value'] | usd }}</td>
+                <td>
+                  <a href="/sell" class="btn btn-primary btn-sm">Sell Stock</a>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% else %}
+    <br />
+    <h3>You don't have any stocks</h3>
+    <br />
+  {% endif %}
+{% endblock main %}

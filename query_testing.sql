@@ -1,0 +1,189 @@
+-- CREATE TABLE purchases ( 
+-- id INTEGER AUTO_INCREMENT PRIMARY KEY
+-- transaction_type TEXT
+-- date TEXT NOT NULL
+-- time NUMBER NOT NULL
+-- FOREIGN KEY(transaction_type) REFERENCES users_stocks(transaction_type)
+-- );
+-- SELECT stock_symbol,
+-- ROUND(AVG(transaction_amount), 2) AS avg_price,
+-- SUM(quantity) AS total_quantity,
+-- ROUND(SUM(transaction_amount * quantity), 2) AS total_value 
+-- FROM 
+--    users_stocks 
+-- INNER JOIN 
+--    stocks ON users_stocks.stock_id = stocks.stock_id 
+-- WHERE 
+--    user_id = 1 
+-- GROUP BY 
+--    stock_symbol
+-- 
+-- SELECT stock_symbol,
+-- ROUND(AVG(transaction_amount), 2) AS avg_price,
+-- SUM(quantity) AS total_quantity,
+-- ROUND(SUM(transaction_amount * quantity), 2) AS total_value 
+-- FROM 
+--    users_stocks 
+-- INNER JOIN 
+--    stocks ON users_stocks.stock_id = stocks.stock_id 
+-- WHERE 
+--    user_id = 1 AND transaction_type = 'b'
+-- GROUP BY 
+--    stock_symbol
+-- user_stocks = db.execute(
+--         """SELECT stock_symbol,
+--             ROUND(AVG(transaction_amount), 2) AS avg_price,
+--             SUM(quantity) AS total_quantity,
+--             ROUND(SUM(transaction_amount * quantity), 2) AS total_paid 
+--             FROM 
+--             users_stocks 
+--             INNER JOIN 
+--             stocks ON users_stocks.stock_id = stocks.stock_id 
+--             WHERE 
+--             user_id = ? AND transaction_type = 'b'
+--             GROUP BY 
+--             stock_symbol""",
+--         user_id,
+--     )
+--     sold_stocks = db.execute(
+--         """SELECT stock_symbol,
+--             SUM(quantity) AS total_quantity,
+--             ROUND(SUM(transaction_amount * quantity), 2) AS total_sale 
+--             FROM 
+--             users_stocks 
+--             INNER JOIN 
+--             stocks ON users_stocks.stock_id = stocks.stock_id 
+--             WHERE 
+--             user_id = ? AND transaction_type = 's'
+--             GROUP BY 
+--             stock_symbol""",
+--         user_id,
+--     )
+-- 
+-- SELECT
+--     users_stocks.stock_id,
+--     stock_symbol,
+--     SUM(quantity) AS quantity,
+--     transaction_type
+-- FROM
+--     users_stocks
+--     INNER JOIN stocks ON users_stocks.stock_id = stocks.stock_id
+-- WHERE
+--     user_id = 1
+--     AND stock_symbol = 'NVDA'
+-- GROUP BY
+--     stock_symbol,
+--     transaction_type
+-- ORDER BY
+--     transaction_type ASC
+-- INSERT INTO
+--     users_stocks (
+--         user_id,
+--         stock_id,
+--         transaction_amount,
+--         quantity,
+--         transaction_type,
+--         date,
+--         time
+--     )
+-- VALUES
+--     (?, ?, ?, ?, ?, ?, ?)
+-- UPDATE users
+-- SET
+--     cash = ?
+-- WHERE
+--     id = ?
+-- 
+-- SELECT
+--     stock_symbol,
+--     stocks.stock_id,
+--     SUM(quantity) AS quantity,
+--     transaction_type
+-- FROM
+--     users_stocks
+--     INNER JOIN stocks ON users_stocks.stock_id = stocks.stock_id
+-- WHERE
+--     user_id = 13
+-- GROUP BY
+--     stock_symbol,
+--     transaction_type
+-- ORDER BY
+--     stock_symbol,
+--     transaction_type ASC
+-- 
+-- DELETE FROM users_stocks;
+-- 
+-- UPDATE users SET cash = 1000000 WHERE id = 1
+-- INSERT INTO
+--     users_stocks (
+--         user_id,
+--         stock_id,
+--         transaction_amount,
+--         quantity,
+--         transaction_type,
+--         date,
+--         time
+--     )
+-- VALUES
+--     (?, ?, ?, ?, ?, ?, ?)
+-- 
+-- SELECT
+--     stock_symbol,
+--     transaction_amount,
+--     quantity,
+--     date,
+--     time
+-- FROM
+--     users_stocks
+--     INNER JOIN stocks ON users_stocks.stock_id = stocks.stock_id
+-- WHERE
+--     user_id = ?
+-- ORDER BY
+--     date DESC,
+--     time DESC
+-- LIMIT
+--     10
+-- 
+-- SELECT
+--     stock_symbol,
+--     transaction_amount,
+--     quantity,
+--     date,
+--     time,
+--     transaction_type
+-- FROM
+--     users_stocks
+--     INNER JOIN stocks ON users_stocks.stock_id = stocks.stock_id
+-- WHERE
+--     user_id = ?
+-- ORDER BY
+--     date DESC,
+--     time DESC
+-- LIMIT
+--     10
+-- 
+-- UPDATE users
+-- SET
+--     cash = ?
+-- WHERE
+--     id = ?
+
+-- SELECT
+--     stock_id
+-- FROM
+--     stocks
+-- WHERE
+--     stock_symbol = ?
+-- 
+-- SELECT
+--     cash
+-- FROM
+--     users
+-- WHERE
+--     id = ?
+
+
+-- SELECT
+--     stock_symbol
+-- FROM
+--     stocks

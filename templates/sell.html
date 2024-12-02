@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block main %}
+  <div class="mb-3">
+    <h1>Sell Stocks</h1>
+  </div>
+  <div class="d-flex flex-column justify-content-center">
+    <form action="/sell" method="post">
+      <div class="container w-25 mb-3">
+        <label for="symbol" class="form-label" id="stockToSell">Select Stock</label>
+        <select class="form-select" name="symbol" id="symbol">
+          <option selected disabled>Select</option>
+          {% for stock in user_stocks %}
+            <option value="{{ stock['stock_symbol'] }}">{{ stock['stock_symbol'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="container w-25 mb-3">
+        <label for="shares" class="form-label">Quantity</label>
+        <input class="form-control"
+               type="number"
+               name="shares"
+               id="shares"
+               placeholder="Quantity"
+               min="0" />
+      </div>
+      <button type="submit" class="btn btn-primary">Sell</button>
+    </form>
+  </div>
+  <script src="/static/availability.js"></script>
+{% endblock main %}

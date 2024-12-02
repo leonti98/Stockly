@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block main %}
+  <div class="container-sm">
+    <form action="/quote" method="post" class="quote-form">
+      <div class="mb-3">
+        <label for="symbol" class="form-label">Search symbol</label>
+        <input type="text"
+               name="symbol"
+               id="symbol"
+               placeholder="Symbol"
+               autofocus
+               autocomplete="off"
+               class="form-control mx-auto w-auto" />
+      </div>
+      <div class="options "></div>
+      <br />
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+  </div>
+  <script src="/static/search.js"></script>
+{% endblock main %}

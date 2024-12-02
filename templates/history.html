@@ -1,0 +1,42 @@
+{% extends "layout.html" %} {% block main %}
+<div class="container-sm">
+  <br />
+  <h3>Transaction History</h3>
+  {% if user_stocks %}
+  <br />
+  <div class="table-responsive">
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Type</th>
+          <th scope="col">Transaction</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in user_stocks %}
+        <tr class="table-info">
+          <td>{{ stock['stock_symbol'] }}</td>
+          {% if stock['transaction_type'] == 's' %}
+          <td>SELL</td>
+          {% else %}
+          <td>BUY</td>
+          {% endif %}
+          <td>{{ stock['transaction_amount'] | usd }}</td>
+          <td>{{ stock['quantity'] }}</td>
+          <td>{{ stock['date'] }}</td>
+          <td>{{ stock['time'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <br />
+  <h3>You do not have any transactions yet</h3>
+  {% endif %}
+</div>
+{% endblock main %}

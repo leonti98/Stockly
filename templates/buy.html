@@ -1,0 +1,64 @@
+{% extends "layout.html" %} {% block main %}
+<div class="container-sm">
+  <form action="/buy" method="post">
+    <div class="mb-3">
+      <label for="symbol" class="form-label">Symbol</label>
+      <input
+        type="text"
+        class="form-control mx-auto w-auto"
+        name="symbol"
+        id="symbol"
+        placeholder="Symbol"
+        autofocus
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="options container-lg"></div>
+
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input
+        type="number"
+        class="form-control mx-auto w-auto"
+        name="shares"
+        id="quantity"
+        placeholder="Quantity"
+        min="1"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Buy</button>
+  </form>
+  <br />
+  <h3>Transaction History</h3>
+  {% if user_stocks %}
+  <div class="table-responsive">
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Bought for</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+          <th scope="col">Current Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in user_stocks %}
+        <tr class="table-info">
+          <td>{{ stock['stock_symbol'] }}</td>
+          <td>{{ stock['transaction_amount'] | usd }}</td>
+          <td>{{ stock['quantity'] }}</td>
+          <td>{{ stock['date'] }}</td>
+          <td>{{ stock['time'] }}</td>
+          <td>{{ current_stocks[stock['stock_symbol']] | usd }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+<script src="/static/search.js"></script>
+{% endblock main %}

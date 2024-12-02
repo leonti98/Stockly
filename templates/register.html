@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block title %} Register {% endblock %} {% block
+main %}
+<div class="container-sm">
+  <form action="/register" method="post">
+    <div class="form-group">
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control mx-auto w-auto"
+        name="username"
+        autofocus
+        placeholder="Username"
+        title="Username"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        class="form-control mx-auto w-auto"
+        name="password"
+        placeholder="Password"
+        title="Password"
+      />
+      <p id="stength"></p>
+    </div>
+    <div class="form-group">
+      <label for="confirmation" class="form-label">Confirmation</label>
+      <input
+        type="password"
+        class="form-control mx-auto w-auto"
+        name="confirmation"
+        placeholder="Confirm Password"
+        title="Confirm Password"
+      />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </form>
+</div>
+<script src="/static/checkPassword.js"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+thead {
+background-color: bisque;
+}
+
+th {
+   font-size: 1rem;
+   font-weight: 600;
+}
+
+.row {
+   margin-top: 20px;
+}
+
+#userBar {
+   margin: 20px;
+}
+
+.col {
+   background-color: #f8f8f8;
+   border: #0b5ed7 solid 1px;
+   margin: 5px;
+   padding-top: 10px;
+}
+
+.table-responsive {
+   margin: 20px;
+   padding-left: 10px
+}
+   

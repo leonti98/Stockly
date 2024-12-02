@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block main %}
+  <div class="container-sm">
+    <form action="/quote" method="post" class="quote-form">
+      <div class="mb-3">
+        <label for="symbol" class="form-label">Search symbol</label>
+        <input type="text"
+               name="symbol"
+               id="symbol"
+               placeholder="Symbol"
+               autofocus
+               autocomplete="off"
+               class="form-control mx-auto w-auto" />
+      </div>
+      <div class="options "></div>
+      <br />
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+  </div>
+  <br />
+  <div class="containter-md">
+    <div class="table-responsive">
+      <table class="table table-primary">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">Stock Symbol</th>
+            <th scope="col">Price</th>
+            <th scope="col">Buy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-info">
+            <td scope="row">{{ stock_info["symbol"] }}</td>
+            <td>{{ stock_info["price"] | usd }}</td>
+            <td>
+              <form action="/buy" method="post" class="row g-2 justify-content-center">
+                <input type="hidden" name="symbol" value="{{ stock_info['symbol'] }}" />
+                <input type="hidden" name="price" value="{{ stock_info['price'] }}" />
+                <div class="col-auto">
+                  <input class="form-control mx-auto w-auto"
+                         type="number"
+                         name="shares"
+                         placeholder="Number of shares" />
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary">Buy</button>
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="/static/search.js"></script>
+{% endblock main %}
